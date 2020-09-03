@@ -69,6 +69,11 @@
       targetRank = parseInt(target.data('rank')) || 0,
       targetCursed = parseInt(target.data('cursed')) || 0;
 
+    if (srcCursed == 0 && targetCursed == 0) {
+      // If no cursed, star transfer
+      return true;
+    }
+
     return (srcRank + srcCursed + targetRank + targetCursed) <= 3;
   };
 
@@ -117,7 +122,7 @@
     __(element).dragable({
       start: function() {
         var elem = __(this);
-        if (elem.parent('#section-card').length && evt.onDragable(elem)) {
+        if (elem.closest('#section-card').length && evt.onDragable(elem)) {
           elem.addClass('grabbing');
           draggedCard = this;
         }
@@ -136,8 +141,8 @@
           if (x != e.screenX || y != e.screenY) {
             x = e.screenX;
             y = e.screenY;
-            var target = __(e.toElement);
-            if (target.parent('#section-card').length) {
+            var target = __(e.toElement).closest('.card');
+            if (target.closest('#section-card').length) {
               // Insert Before
               if (e.offsetX <= 20) {
                 if (!target.prev().is(draggedCard)) {
@@ -180,13 +185,12 @@
           var nxRankCount = parseInt(next.data('rank')) || 0;
 
           // Rank Transfer
-          var diff = Math.min(rankCount, 3 - nxRank),
+          var diff = Math.min(rankCount, 3 - nxRankCount),
             srcRank = rankCount - diff;
 
           next.data('rank', (nxRankCount + diff));
 
           evt.onMergeTo(src, next)
-          fn.drawRank(src);
           fn.drawRank(next);
           if (srcRank == 0) {
             src.css('animation', '');
@@ -204,6 +208,7 @@
           } else {
             src.data('rank', srcRank);
           }
+          fn.drawRank(src);
         }
       }
 
