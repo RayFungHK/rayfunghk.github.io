@@ -302,12 +302,13 @@ main {
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-  background-color: #f1f2f3;
   width: 40px;
-  height: 80px;
+  height: 71.36px;
+  background-color: rgba(0, 0, 0, 0.5);
   border: 1px dotted #c7cdd1;
   border-radius: 4px;
   box-sizing: content-box;
+  padding: 4px;
 }
 
 .card {
