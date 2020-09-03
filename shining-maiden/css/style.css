@@ -326,6 +326,7 @@ main {
 .card.freeze {
   opacity: 0.5;
   cursor: not-allowed;
+  box-shadow: inset 0 0 5px #cf3617;
 }
 .card.cursed {
   box-shadow: inset 0 0 5px #ed2fc7;
