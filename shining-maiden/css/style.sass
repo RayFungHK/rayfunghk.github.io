@@ -206,6 +206,9 @@ $size: 1.2rem 1.4rem 1.6rem 1.8rem 2.0rem
   width: 640px
   overflow: hidden
   border-radius: .3rem
+  background-image: url('../images/grass.png')
+  background-size: cover
+  background-position: center center
 
 #battle-ui
   height: 337px
@@ -233,25 +236,52 @@ $size: 1.2rem 1.4rem 1.6rem 1.8rem 2.0rem
   box-sizing: content-box
 
 .card
-  border-radius: 4px
   position: relative
-  box-shadow: 0 1px 3px $shadow, 0 1px 2px scale-color($shadow, $alpha: -40%)
-  background-color: scale-color($primary-background, $lightness: +45%)
+  border-radius: 4px
   width: 40px
-  height: 80px
+  height: 71.36px
   transition: all 0.1s
   font-size: 2rem
   text-align: center
   box-sizing: content-box
-  line-height: 80px
+  background-size: 60px
+  background-position: center
+  &:before
+    @include fullsize
+    @include blank-element
+    position: absolute
+    z-index: 10
+    background-image: url('../images/card-frame.svg')
+    background-size: cover
+    background-position: center center
   &:nth-child(n+2)
     margin-left: 1rem
   &.freeze
     opacity: .5
     cursor: not-allowed
-    box-shadow: inset 0 0 5px nth(map-get($color, 'red'), 1)
+    &:after
+      @include blank-element
+      border: 4px solid nth(map-get($color, 'red'), 1)
+      box-sizing: border-box
+      box-shadow: inset 0 0 5px nth(map-get($color, 'red'), 1)
+      position: absolute
+      z-index: 9
+      top: 14%
+      bottom: 11%
+      left: 10%
+      right: 10%
   &.cursed
-    box-shadow: inset 0 0 5px #ed2fc7
+    &:after
+      @include blank-element
+      border: 4px solid #ed2fc7
+      box-sizing: border-box
+      box-shadow: inset 0 0 5px #ed2fc7
+      position: absolute
+      z-index: 9
+      top: 14%
+      bottom: 11%
+      left: 10%
+      right: 10%
 
 [draggable]
   cursor: grab
@@ -261,14 +291,15 @@ $size: 1.2rem 1.4rem 1.6rem 1.8rem 2.0rem
 
 .rank
   position: absolute
-  bottom: 5px
+  bottom: 0px
   right: 5px
   left: 5px
-  text-shadow: 0 0 1px #000, 0 1px 2px scale-color($shadow, $alpha: -40%)
+  -webkit-text-stroke: 1px black
   font-size: .9rem
   color: #ffd53f
   text-align: center
   line-height: normal
+  z-index: 11
   span.cursed
     color: #ed2fc7 !important
 

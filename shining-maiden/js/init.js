@@ -1,7 +1,29 @@
 (function(contaxt) {
   var fn = {},
     draggedCard,
-    evt = {};
+    evt = {},
+    character = {
+      agnes: {
+        name: '艾格尼絲',
+        id: '101',
+        code: 'agnes'
+      },
+      anne: {
+        name: '安妮',
+        id: '010',
+        code: 'anne'
+      },
+      apis: {
+        name: '阿比斯',
+        id: '302',
+        code: 'apis'
+      },
+      charles: {
+        name: '查爾斯',
+        id: '011',
+        code: 'charles'
+      },
+    };
 
   evt.onMergeable = function(element) {
     var elem = __(element),
@@ -209,6 +231,12 @@
     evt.onReset();
   };
 
+  var characterInBattle = [];
+  // For Test
+  __.each(character, function(code, data) {
+    characterInBattle.push(data);
+  });
+
   fn.drawCard = function(fill) {
     var count = __('#section-card .card').length,
       randomCard = 'ABCDEFGH';
@@ -216,8 +244,16 @@
       count = 8 - count;
       (function draw() {
         count--;
+        var randCharacter = characterInBattle[Math.floor(Math.random() * (characterInBattle.length - 1))],
+          cardID = 'card_' + randCharacter.code + '_skill_' + Math.ceil(Math.random() * 2) + '_' + randCharacter.id;
+
         var randID = randomCard.charAt(Math.floor(Math.random() * Math.floor(randomCard.length - 1))),
-          card = __('<div class="card" data-id="' + randID + '" data-rank="1">' + randID + '<div class="rank">★</div></div>');
+          card = __('<div class="card" data-id="' + cardID + '" data-rank="1"><div class="rank">★</div></div>');
+
+        card.css({
+          'background-image': "url(./images/" + cardID + ".png)"
+        });
+
         __('#section-card').prepend(card);
         SMBS.setupCard(card);
         card.css({
