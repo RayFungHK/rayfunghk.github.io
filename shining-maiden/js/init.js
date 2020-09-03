@@ -156,7 +156,7 @@
         if (draggedCard) {
           // Event: onDrop
           var target = __(e.toElement);
-          if (target.parent('#reserve-slot').length) {
+          if (target.closest('#reserve-slot').length) {
             target.detach();
             __('#reserve-slot').append(draggedCard)
           }
@@ -322,6 +322,7 @@ __(function() {
             elem.html('');
             elem.append(e.draggedItem)
           }
+          e.preventDefault();
         }
       })
       __('#battle-ui').append(reserveSlot)
