@@ -317,7 +317,7 @@ __(function() {
       var reserveSlot = __('<div id="reserve-slot"></div>');
       reserveSlot.dropable({
         drop: function(e) {
-          var elem = __(this);
+          var elem = __(this).closest('#reserve-slot');
           if (SMBS.event.onReverseDropable(e.draggedItem)) {
             elem.html('');
             elem.append(e.draggedItem)
