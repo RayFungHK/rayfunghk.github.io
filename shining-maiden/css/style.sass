@@ -1,0 +1,341 @@
+$primary-font: 'Roboto', 'Noto Sans TC', sans-serif
+
+@mixin compact
+  margin: 0
+  padding: 0
+
+@mixin fullsize
+  height: 100%
+  width: 100%
+
+@mixin cover
+  right: 0
+  left: 0
+  top: 0
+  bottom: 0
+
+@mixin blank-element
+  display: block
+  content: ''
+
+@mixin touch-scroll-enhance
+  -webkit-overflow-scrolling: touch
+  -ms-overflow-style: -ms-autohiding-scrollbar
+  overflow: auto
+  max-width: inherit
+
+@mixin touch-scroll
+  position: relative
+  @include touch-scroll-enhance
+
+@mixin resize-style
+  appearance: none
+  -moz-appearance: none
+  -webkit-appearance: none
+  border: none
+  box-shadow: none
+  border-radius: 0
+
+@mixin no-selection
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+@mixin no-draggable
+  -webkit-user-drag: none
+  -khtml-user-drag: none
+  -moz-user-drag: none
+  -o-user-drag: none
+  user-drag: none
+
+@mixin nav
+  display: inline-flex
+  flex-wrap: nowrap
+  align-items: center
+
+@mixin get-color-scheme
+  @each $code, $data in $color
+    @if nth($data, 2)
+      @content($code, nth($data, 1))
+
+@mixin extend-at-root($selector, $extend: null)
+  @at-root #{$selector}
+    @content($selector)
+    @if $extend != null
+      #{$extend}
+        @content($selector)
+  #{$selector}
+    @content($selector)
+
+$primary-background: hsl(205, 10%, 94%)
+$sidebar-background: hsl(205, 15%, 27%)
+$primary-font-color: hsl(205, 10%, 20%)
+$category-font-color: hsl(205, 15%, 78%)
+$shadow: hsla(0, 0%, 0%, 0.1)
+
+$color: ('black': (hsl(0, 0%, 0%), false), 'white': (hsl(0, 100%, 100%), false), 'red': (hsl(10, 80%, 45%), true),  'green': (hsl(120, 70%, 45%), true), 'blue': (hsl(205, 100%, 45%), true))
+
+body, html
+  @include compact
+  @include fullsize
+  font-size: 13px
+
+body, button, div, form, h1, h2, h3, h4, h5, h6, input, p, pre, select, span, table, textarea
+  font-family: #{$primary-font}
+  text-rendering: optimizeLegibility
+  font-feature-settings: "kern"
+  -webkit-font-feature-settings: "kern"
+  -moz-font-feature-settings: "kern"
+  -moz-font-feature-settings: "kern=1"
+  vertical-align: baseline
+  outline: none
+  font-style: inherit
+  font-weight: inherit
+  background-size: cover
+
+*
+  box-sizing: border-box
+
+a
+  text-decoration: none
+
+input, select, textarea
+  font-size: inherit
+
+a
+  color: inherit
+
+body
+  background: $primary-background
+  color: $primary-font-color
+  &.colorful
+    background-image: linear-gradient(45deg, #feac5e, #4bc0c8, #c779d0)
+
+header
+  position: fixed
+  top: 0
+  left: 250px
+  right: 0
+  z-index: 100
+  display: block
+  background: scale-color($primary-background, $lightness: +80%)
+  box-shadow: 0 0 5px $shadow
+  height: 50px
+
+footer
+  display: block
+  padding: 2rem
+  border-top: 1px solid scale-color($primary-background, $lightness: -5%)
+  font-size: 90%
+  color: scale-color($primary-font-color, $lightness: +45%)
+
+main
+  display: grid
+  grid-template-columns: 250px minmax(0, 1fr)
+  min-height: 100%
+  max-width: 100%
+  width: 100%
+
+#logo
+  font-size: 1.3rem
+  height: 50px
+  line-height: 50px
+  text-align: center
+  font-weight: 400
+  color: scale-color($primary-font-color, $lightness: +60%)
+
+#sidebar
+  position: relative
+  background: $sidebar-background
+  z-index: 100
+
+.category
+  font-size: 1.3rem
+  font-weight: bold
+  color: $category-font-color
+  padding: 1rem 2rem
+  cursor: pointer
+  & i
+    float: right
+
+@mixin mixmg($set, $parent: null)
+  @each $code, $name in $set
+    $set: map-remove($set, $code)
+    &#{$code}
+      @if $parent != null
+        @extend #{$parent}
+      margin-#{$name}: 1rem
+      &-nr
+        margin-#{$name}: .5rem
+      @include mixmg($set, &)
+
+$direction: ('t': 'top', 'r': 'right', 'b': 'bottom', 'l': 'left')
+.gtr-
+  @include mixmg($direction)
+  &f
+    margin: 1rem
+    &-nr
+      margin: 0.5rem
+
+@mixin mixbr($set, $parent: null)
+  @each $code, $name in $set
+    $set: map-remove($set, $code)
+    &#{$code}
+      @if $parent != null
+        @extend #{$parent}
+      border-#{$name}: 1px solid scale-color($primary-background, $lightness: -5%)
+      @include mixbr($set, &)
+
+$direction: ('t': 'top', 'r': 'right', 'b': 'bottom', 'l': 'left')
+.bdr-
+  @include mixbr($direction)
+  &f
+    border: 1px solid scale-color($primary-background, $lightness: -5%) !important
+
+$size: 1.2rem 1.4rem 1.6rem 1.8rem 2.0rem
+@for $index from 1 through length($size)
+  .fs-#{$index}
+    font-size: nth($size, $index) !important
+
+#screen
+  @include no-selection
+  box-shadow: 0 1px 3px $shadow, 0 1px 2px scale-color($shadow, $alpha: -40%)
+  background: #fff
+  width: 640px
+  overflow: hidden
+  border-radius: .3rem
+
+#battle-ui
+  height: 337px
+  overflow: hidden
+  position: relative
+
+.fullsize
+  @include fullsize
+
+#section-card
+  position: absolute
+  bottom: 1rem
+  right: 1rem
+  left: 1rem
+
+#reserve-slot
+  position: absolute
+  bottom: 1rem
+  right: 1rem
+  background-color: scale-color($primary-background, $lightness: +15%)
+  width: 40px
+  height: 80px
+  border: 1px dotted scale-color($primary-background, $lightness: -15%)
+  border-radius: 4px
+  box-sizing: content-box
+
+.card
+  border-radius: 4px
+  position: relative
+  box-shadow: 0 1px 3px $shadow, 0 1px 2px scale-color($shadow, $alpha: -40%)
+  background-color: scale-color($primary-background, $lightness: +45%)
+  width: 40px
+  height: 80px
+  transition: all 0.1s
+  font-size: 2rem
+  text-align: center
+  box-sizing: content-box
+  line-height: 80px
+  &:nth-child(n+2)
+    margin-left: 1rem
+  &.freeze
+    opacity: .5
+    cursor: not-allowed
+  &.cursed
+    box-shadow: inset 0 0 5px #ed2fc7
+
+[draggable]
+  cursor: grab
+
+[draggable].grabbing
+  cursor: grabbing
+
+.rank
+  position: absolute
+  bottom: 5px
+  right: 5px
+  left: 5px
+  text-shadow: 0 0 1px #000, 0 1px 2px scale-color($shadow, $alpha: -40%)
+  font-size: .9rem
+  color: #ffd53f
+  text-align: center
+  line-height: normal
+  span.cursed
+    color: #ed2fc7 !important
+
+#button-panel
+  margin-top: .5rem
+  a
+    @include no-selection
+    position: relative
+    display: block
+    padding: .5rem
+    background: scale-color(nth(map-get($color, 'blue'), 1), $lightness: +50%)
+    border-radius: 2px
+    &.red
+      background: scale-color(nth(map-get($color, 'red'), 1), $lightness: +50%)
+    &.disabled
+      opacity: .4
+      cursor: not-allowed
+  input
+    @include no-selection
+    display: none
+    &+label
+      @include no-selection
+      position: relative
+      cursor: pointer
+      display: block
+      padding: .5rem
+      background: scale-color(nth(map-get($color, 'black'), 1), $lightness: +90%)
+      border-radius: 2px
+      color: scale-color(nth(map-get($color, 'black'), 1), $lightness: +5%)
+    &:checked
+      &+label
+        background: scale-color(nth(map-get($color, 'green'), 1), $lightness: +50%)
+    &.disabled
+      &+label
+        opacity: .4
+        cursor: not-allowed
+
+.tips
+  display: none
+
+*:hover > .tips
+  display: block
+  position: absolute
+  padding: 1rem
+  background: nth(map-get($color, 'black'), 1)
+  color: #fff
+  width: 200px
+  margin-top: 1rem
+  left: 50%
+  transform: translateX(-50%)
+  border-radius: .5rem
+
+#title
+  margin-bottom: 1rem
+  a
+    color: scale-color(nth(map-get($color, 'blue'), 1), $lightness: +30%)
+    text-decoration: underline
+
+@keyframes card-in
+  0%
+    transform: translateX(-640px)
+  100%
+    transform: translateX(0)
+
+@keyframes card-merge
+  0%
+    transform: translateX(0)
+    opacity: 1
+  100%
+    transform: translateX(40px)
+    opacity: 0

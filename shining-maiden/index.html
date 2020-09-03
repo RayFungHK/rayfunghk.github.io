@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,initial-scale=1.0,user-scalable=yes,maximum-scale=1.0">
+
+  <title>Shining Maiden Battle Simulator</title>
+  <meta name="description" content="Shining Maiden Battle Simulator" />
+  <meta name="author" content="Ray Fung" />
+  <link rel="stylesheet" href="./css/flexit.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <script src="./js/Void0.js"></script>
+  <script src="./js/init.js"></script>
+</head>
+
+<body>
+  <div class="flexbox fi-center fi-middle fullsize">
+    <div>
+      <div id="title" class="flexbox fi-nowrap fi-gutters">
+        <div>
+          <div class="fs-3">少女平和戰鬥模擬器</div>
+          疊牌及戰鬥功能建議
+        </div>
+        <div class="col-pop">Reserved by <a href="mailto: hello@rayfung.hk">Ray Fung</a>. v0.1</div>
+      </div>
+      <div id="screen">
+        <div id="battle-ui">
+          <div id="section-card" class="flexbox fi-nowrap fi-center">
+          </div>
+        </div>
+      </div>
+      <div id="button-panel" class="flexbox fi-nowrap fi-gutters">
+        <div><a id="draw" href="javascript:void(0)">抽牌</a></div>
+        <div><a id="reset" class="red" href="javascript:void(0)">重設</a></div>
+        <div><input type="checkbox" id="enable-reserve-slot"><label for="enable-reserve-slot">預留卡槽<div class="tips">提供一個預留卡槽，可以將任一卡牌放到預留卡槽中作備用。預留卡槽中的卡牌不能移到手牌區或疊牌，只要有新一張卡牌放到預留卡槽時，存在於預留卡槽中的卡牌將會被移除。</div></label></div>
+        <div><input type="checkbox" class="disabled" disabled id="enable-soulbound"><label for="enable-soulbound">魂結系統<div class="tips">當使用等級三的卡牌時，下一張加到手牌的卡牌會附上魂結。如果帶有魂結的卡牌前後有相同效果的魂結時，使用該卡牌後會附觸發魂結效果。</div></label></div>
+        <div><a id="freeze-card" href="javascript:void(0)">隨機封鎖<div class="tips">卡牌封鎖使於卡牌無法移動及疊加，也無法移到預留卡槽。</div></a></div>
+        <div><a id="curse-card" href="javascript:void(0)">隨機咀咒<div class="tips">卡牌咀咒會為卡牌增加咀咒等級從而佔用卡牌的等級，以降低卡牌的等級上限。帶咀咒的卡牌如果與另一張同類卡的等級總和為 3 以上，則無法疊加。而帶咀咒的卡牌餘相同的卡疊加後，將會感染新的卡牌。咀咒上限為 2。</div></a></div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
